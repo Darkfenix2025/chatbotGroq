@@ -3,6 +3,7 @@ import { Message } from './types';
 import { ChatMessage } from './components/ChatMessage';
 import { ChatInput } from './components/ChatInput';
 import { MessageSquare } from 'lucide-react';
+import logo from './assets/imagen_chatbot.jpg'
 
 function App() {
     const [messages, setMessages] = useState<Message[]>([]);
@@ -117,8 +118,9 @@ function App() {
             <div className="mx-auto max-w-4xl px-4 py-8">
                 <div className="mb-8 text-center">
                     <div className="inline-flex items-center gap-2 text-2xl font-bold text-gray-800">
+                        <img src={logo} alt="Legalito" className="h-16 w-16 mr-5" />
                         <MessageSquare className="h-8 w-8 text-blue-500" />
-                        AI Chat Assistant
+                        Legalito Chat Assistant
                     </div>
                 </div>
 
@@ -133,9 +135,11 @@ function App() {
                                 <ChatMessage key={index} message={message} />
                             ))
                         )}
-                    </div>
-
+                    </div>                    
                     <ChatInput onSend={handleSendMessage} disabled={isLoading} />
+                    <p className="text-s text-gray-900 mt-6 text-justify">
+                        <strong>Aviso Legal:</strong> La información proporcionada por este chatbot es solo para fines informativos generales y no constituye asesoramiento legal. Si necesitas asesoramiento legal específico, por favor consulta a un abogado de Legal-IT-Ø.
+                    </p>
                 </div>
             </div>
         </div>
