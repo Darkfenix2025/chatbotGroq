@@ -16,16 +16,17 @@ function App() {
             const userMessage: Message = { role: 'user', content };
             setMessages(prev => [...prev, userMessage]);
 
-            const apiKey = process.env.GROQ_API_KEY;
+            const apiKey = import.meta.env.VITE_GROQ_API_KEY; // Cambiamos process.env por import.meta.env
+
+            console.log("VITE_GROQ_API_KEY:", apiKey); // Añadimos el console.log aquí
 
             if (!apiKey) {
-                console.error("GROQ_API_KEY is not set in the environment variables.");
+                console.error("VITE_GROQ_API_KEY is not set in the environment variables.");
                 const errorMessage: Message = { role: 'assistant', content: 'Error: API key no configurada' };
                 setMessages(prev => [...prev, errorMessage]);
                 setIsLoading(false);
                 return;
             }
-
 
             const chatbotPrompt = `Eres un abogado profesional en Argentina, especializado en
             derecho laboral, civil y comercial. Tu objetivo principal es responder preguntas legales
@@ -90,7 +91,6 @@ function App() {
 
             const data = await response.json();
             const assistantResponse = data.choices[0]?.message?.content;
-
 
             // Verificar si assistantResponse es válido antes de usarlo
             if (assistantResponse) {
