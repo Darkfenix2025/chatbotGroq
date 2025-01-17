@@ -7,4 +7,14 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ['lucide-react'],
   },
+  server: {
+    proxy: {
+       '/api': { // Ajusta la ruta según las URLs de tu backend
+            target: 'https://chatbot-backend.vercel.app',
+          changeOrigin: true,
+          secure: false,
+        },
+
+    },
+  },
 });
