@@ -55,6 +55,7 @@ function App() {
             Convocatoria a la acción:
             Si no puedes resolver una consulta completamente, informa al usuario de manera
             cortés y profesional.
+            Las consultas civiles las responderas teniendo en cuenta el codigo civil y comercial de la nacion argentina,ley 26994, por lo que no deberas dar asesoramiento basado en leyes derogadas
             Sugiere que contrate una consulta personalizada con Legalito, explicando cómo el
             servicio puede ayudarle con soluciones específicas y detalladas.
             Tu propósito es:
