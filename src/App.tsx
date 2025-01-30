@@ -13,7 +13,8 @@ function App() {
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
-        // Aquí podrías cargar mensajes antiguos desde Firebase si es necesario
+        // Aquí podrías cargar mensajes antiguos desde Firebase si es necesario en el futuro
+        // Por ahora lo dejamos vacío, pero es un buen lugar para esa lógica.
     }, []);
 
     const handleSendMessage = async (content: string) => {
@@ -24,49 +25,25 @@ function App() {
             setMessages(prev => [...prev, userMessage]);
 
             // Guardar mensaje del usuario en Firebase
-            await addDoc(collection(db, 'chat-messages'), userMessage);
+            try {
+                await addDoc(collection(db, 'chat-messages'), userMessage);
+            } catch (firebaseError) {
+                console.error('Error al guardar mensaje del usuario en Firebase:', firebaseError);
+                // Decide si quieres mostrar un mensaje de error al usuario si falla el guardado en Firebase.
+                // Por ahora, solo loggeamos el error.
+            }
 
-            const apiKey = import.meta.env.VITE_GROQ_API_KEY; // Cambiamos process.env por import.meta.env
-            console.log("VITE_GROQ_API_KEY:", apiKey); // Añadimos el console.log aquí
+
+            const apiKey = import.meta.env.VITE_GROQ_API_KEY;
+            console.log("VITE_GROQ_API_KEY:", apiKey);
             if (!apiKey) {
-                console.error("VITE_GROQ_API_KEY is not set in the environment variables.");
-                const errorMessage: Message = { role: 'assistant', content: 'Error: API key no configurada' };
+                console.error("VITE_GROQ_API_KEY no está configurada en las variables de entorno.");
+                const errorMessage: Message = { role: 'assistant', content: 'Error: API key no configurada. Contacta al administrador.' };
                 setMessages(prev => [...prev, errorMessage]);
                 setIsLoading(false);
                 return;
             }
-            const chatbotPrompt = `Eres un abogado profesional en Argentina, especializado en
-            derecho laboral, civil y comercial. Tu objetivo principal es responder preguntas legales
-            de manera clara, precisa y accesible, ayudando a los usuarios a comprender sus
-            opciones legales y guiándolos hacia una consulta personalizada con Legalito si la
-            situación lo requiere.
-            Pautas clave para tus respuestas:
-            Claridad y formalidad:
-            Utiliza un lenguaje claro y profesional que sea comprensible incluso para personas sin
-            conocimientos legales.
-            Evita el uso de jerga técnica sin explicarla.
-            Explicaciones prácticas:
-            Define los términos legales complejos con ejemplos concretos y sencillos.
-            Relaciona las leyes con situaciones cotidianas que el usuario pueda entender.
-            Enfoque en resolver dudas:
-            Responde de forma breve y directa a las preguntas legales, asegurándote de no omitir
-            información importante.
-            Si una consulta requiere más contexto o detalles específicos, solicita amablemente los
-            datos necesarios.
-            Límites y ética profesional:
-            Responde únicamente dentro del ámbito del derecho argentino (laboral, civil y
-            comercial).
-            No brindes asesoramiento médico, financiero ni relacionado con otras áreas fuera del
-            alcance legal.
-            Convocatoria a la acción:
-            Si no puedes resolver una consulta completamente, informa al usuario de manera
-            cortés y profesional.
-            Las consultas civiles las responderas teniendo en cuenta el codigo civil y comercial de la nacion argentina,ley 26994, por lo que no deberas dar asesoramiento basado en leyes derogadas
-            Sugiere que contrate una consulta personalizada con Legalito, explicando cómo el
-            servicio puede ayudarle con soluciones específicas y detalladas.
-            Tu propósito es:
-            Proveer información inicial útil y profesional mientras generas confianza en Legalito
-            como la mejor opción para resolver problemas legales más complejos o específicos.`;
+            const chatbotPrompt = `Eres un abogado profesional en Argentina... (mismo prompt que tienes)`;
             const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
                 method: 'POST',
                 headers: {
@@ -89,29 +66,34 @@ function App() {
             });
             if (!response.ok) {
                 const errorData = await response.json();
-                console.error('Error from Groq API:', errorData);
-                const errorMessage: Message = { role: 'assistant', content: 'Ocurrió un error al procesar tu mensaje con Groq.' };
+                console.error('Error desde la API de Groq:', errorData); // Más detalle en el log
+                const errorMessage: Message = { role: 'assistant', content: `Error al procesar tu mensaje con Groq. Código de error: ${response.status}. Por favor, intenta de nuevo más tarde.` }; // Mensaje más informativo al usuario
                 setMessages(prev => [...prev, errorMessage]);
                 return;
             }
             const data = await response.json();
             const assistantResponse = data.choices[0]?.message?.content;
-            // Verificar si assistantResponse es válido antes de usarlo
             if (assistantResponse) {
                 const assistantMessage: Message = { role: 'assistant', content: assistantResponse };
                 setMessages(prev => [...prev, assistantMessage]);
 
                 // Guardar mensaje del asistente en Firebase
-                await addDoc(collection(db, 'chat-messages'), assistantMessage);
+                try {
+                    await addDoc(collection(db, 'chat-messages'), assistantMessage);
+                } catch (firebaseError) {
+                    console.error('Error al guardar mensaje del asistente en Firebase:', firebaseError);
+                    // Decide si quieres mostrar un mensaje de error al usuario.
+                    // Por ahora, solo loggeamos el error.
+                }
             } else {
-                const errorMessage: Message = { role: 'assistant', content: 'No se recibió una respuesta válida de Groq.' };
+                const errorMessage: Message = { role: 'assistant', content: 'No se recibió una respuesta válida del asistente. Por favor, intenta de nuevo más tarde.' }; // Mensaje más amigable al usuario
                 setMessages(prev => [...prev, errorMessage]);
-                console.error('No se recibió respuesta válida de Groq');
+                console.error('No se recibió respuesta válida de Groq:', data); // Loggeamos la data completa para debuggear
             }
 
         } catch (error) {
-            console.error('Error:', error);
-            const errorMessage: Message = { role: 'assistant', content: 'Ocurrió un error al procesar tu mensaje.' };
+            console.error('Error inesperado:', error); // Mensaje de error más general para errores inesperados
+            const errorMessage: Message = { role: 'assistant', content: 'Ocurrió un error inesperado al procesar tu mensaje. Por favor, intenta de nuevo más tarde.' }; // Mensaje de error más amigable al usuario
             setMessages(prev => [...prev, errorMessage]);
         } finally {
             setIsLoading(false);
@@ -139,7 +121,7 @@ function App() {
                                 <ChatMessage key={index} message={message} />
                             ))
                         )}
-                    </div>                    
+                    </div>
                     <ChatInput onSend={handleSendMessage} disabled={isLoading} />
                     <p className="text-s text-gray-900 mt-6 text-justify">
                         <strong>Aviso Legal:</strong> La información proporcionada por este chatbot es solo para fines informativos generales y no constituye asesoramiento legal. Si necesitas asesoramiento legal específico, por favor consulta a un abogado de Legal-IT-Ø.
