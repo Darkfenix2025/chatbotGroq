@@ -1,26 +1,33 @@
-import { useState } from 'react';
+// src/App.tsx
+import { useState, useEffect } from 'react';
 import { Message } from './types';
 import { ChatMessage } from './components/ChatMessage';
 import { ChatInput } from './components/ChatInput';
 import { MessageSquare } from 'lucide-react';
-import logo from './assets/imagen_chatbot.jpg'
+import logo from './assets/imagen_chatbot.jpg';
+import { db } from './firebase-config';
+import { collection, addDoc } from 'firebase/firestore';
 
 function App() {
     const [messages, setMessages] = useState<Message[]>([]);
     const [isLoading, setIsLoading] = useState(false);
 
+    useEffect(() => {
+        // Aquí podrías cargar mensajes antiguos desde Firebase si es necesario
+    }, []);
+
     const handleSendMessage = async (content: string) => {
         try {
             setIsLoading(true);
-
             // Añadir mensaje del usuario
             const userMessage: Message = { role: 'user', content };
             setMessages(prev => [...prev, userMessage]);
 
+            // Guardar mensaje del usuario en Firebase
+            await addDoc(collection(db, 'chat-messages'), userMessage);
+
             const apiKey = import.meta.env.VITE_GROQ_API_KEY; // Cambiamos process.env por import.meta.env
-
             console.log("VITE_GROQ_API_KEY:", apiKey); // Añadimos el console.log aquí
-
             if (!apiKey) {
                 console.error("VITE_GROQ_API_KEY is not set in the environment variables.");
                 const errorMessage: Message = { role: 'assistant', content: 'Error: API key no configurada' };
@@ -28,7 +35,6 @@ function App() {
                 setIsLoading(false);
                 return;
             }
-
             const chatbotPrompt = `Eres un abogado profesional en Argentina, especializado en
             derecho laboral, civil y comercial. Tu objetivo principal es responder preguntas legales
             de manera clara, precisa y accesible, ayudando a los usuarios a comprender sus
@@ -61,7 +67,6 @@ function App() {
             Tu propósito es:
             Proveer información inicial útil y profesional mientras generas confianza en Legalito
             como la mejor opción para resolver problemas legales más complejos o específicos.`;
-
             const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
                 method: 'POST',
                 headers: {
@@ -82,7 +87,6 @@ function App() {
                     ]
                 })
             });
-
             if (!response.ok) {
                 const errorData = await response.json();
                 console.error('Error from Groq API:', errorData);
@@ -90,20 +94,20 @@ function App() {
                 setMessages(prev => [...prev, errorMessage]);
                 return;
             }
-
             const data = await response.json();
             const assistantResponse = data.choices[0]?.message?.content;
-
             // Verificar si assistantResponse es válido antes de usarlo
             if (assistantResponse) {
                 const assistantMessage: Message = { role: 'assistant', content: assistantResponse };
                 setMessages(prev => [...prev, assistantMessage]);
+
+                // Guardar mensaje del asistente en Firebase
+                await addDoc(collection(db, 'chat-messages'), assistantMessage);
             } else {
                 const errorMessage: Message = { role: 'assistant', content: 'No se recibió una respuesta válida de Groq.' };
-                 setMessages(prev => [...prev, errorMessage]);
-                 console.error('No se recibió respuesta válida de Groq');
+                setMessages(prev => [...prev, errorMessage]);
+                console.error('No se recibió respuesta válida de Groq');
             }
-
 
         } catch (error) {
             console.error('Error:', error);
@@ -124,7 +128,6 @@ function App() {
                         Legalito Chat Assistant
                     </div>
                 </div>
-
                 <div className="rounded-xl bg-white p-4 shadow-lg">
                     <div className="mb-4 h-[500px] overflow-y-auto space-y-4">
                         {messages.length === 0 ? (
