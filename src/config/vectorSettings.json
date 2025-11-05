@@ -1,0 +1,122 @@
+{
+  "development": {
+    "similarity": {
+      "minSimilarity": 0.4,
+      "highConfidence": 0.75,
+      "coreActivation": 0.2,
+      "specializedModules": 0.6
+    },
+    "tokens": {
+      "maxTokensPerQuery": 6000,
+      "basePromptTokens": 600,
+      "maxTokensPerModule": 1000,
+      "responseTokenReserve": 1200
+    },
+    "modules": {
+      "maxModulesPerQuery": 6,
+      "minCoreModules": 2,
+      "maxModulesPerCategory": 3,
+      "maxSpecializedModules": 2
+    },
+    "categoryWeights": {
+      "core": 1.6,
+      "analysis": 1.3,
+      "tactics": 1.1,
+      "modes": 0.9
+    },
+    "rankingWeights": {
+      "semanticSimilarity": 0.35,
+      "modulePriority": 0.25,
+      "categoryWeight": 0.2,
+      "keywordMatch": 0.1,
+      "recentUsage": 0.1
+    },
+    "performance": {
+      "embeddingCacheSize": 1500,
+      "queryCacheSize": 750,
+      "cacheTTLMinutes": 90,
+      "embeddingTimeout": 45000,
+      "batchSize": 8
+    }
+  },
+  "production": {
+    "similarity": {
+      "minSimilarity": 0.6,
+      "highConfidence": 0.85,
+      "coreActivation": 0.3,
+      "specializedModules": 0.75
+    },
+    "tokens": {
+      "maxTokensPerQuery": 4000,
+      "basePromptTokens": 500,
+      "maxTokensPerModule": 800,
+      "responseTokenReserve": 1000
+    },
+    "modules": {
+      "maxModulesPerQuery": 5,
+      "minCoreModules": 2,
+      "maxModulesPerCategory": 2,
+      "maxSpecializedModules": 1
+    },
+    "categoryWeights": {
+      "core": 1.5,
+      "analysis": 1.2,
+      "tactics": 1.0,
+      "modes": 0.8
+    },
+    "rankingWeights": {
+      "semanticSimilarity": 0.4,
+      "modulePriority": 0.25,
+      "categoryWeight": 0.15,
+      "keywordMatch": 0.1,
+      "recentUsage": 0.1
+    },
+    "performance": {
+      "embeddingCacheSize": 2000,
+      "queryCacheSize": 1000,
+      "cacheTTLMinutes": 120,
+      "embeddingTimeout": 30000,
+      "batchSize": 12
+    }
+  },
+  "testing": {
+    "similarity": {
+      "minSimilarity": 0.3,
+      "highConfidence": 0.7,
+      "coreActivation": 0.1,
+      "specializedModules": 0.5
+    },
+    "tokens": {
+      "maxTokensPerQuery": 2000,
+      "basePromptTokens": 300,
+      "maxTokensPerModule": 500,
+      "responseTokenReserve": 500
+    },
+    "modules": {
+      "maxModulesPerQuery": 3,
+      "minCoreModules": 1,
+      "maxModulesPerCategory": 2,
+      "maxSpecializedModules": 1
+    },
+    "categoryWeights": {
+      "core": 1.2,
+      "analysis": 1.0,
+      "tactics": 0.8,
+      "modes": 0.6
+    },
+    "rankingWeights": {
+      "semanticSimilarity": 0.5,
+      "modulePriority": 0.2,
+      "categoryWeight": 0.15,
+      "keywordMatch": 0.1,
+      "recentUsage": 0.05
+    },
+    "performance": {
+      "embeddingCacheSize": 100,
+      "queryCacheSize": 50,
+      "cacheTTLMinutes": 30,
+      "embeddingTimeout": 15000,
+      "batchSize": 5
+    }
+  }
+}

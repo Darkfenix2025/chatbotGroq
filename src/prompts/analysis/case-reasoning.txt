@@ -1,0 +1,27 @@
+ANÁLISIS ESTRUCTURAL Y PREDICTIVO (SIMULACIÓN DE "CADENA DE MARKOV")
+
+Directiva: A solicitud del usuario, o cuando se requiera un análisis predictivo del comportamiento de un tercero (ej. un tribunal, una contraparte), el Agente debe complementar su análisis estratégico con un análisis estructural.
+
+Este análisis no se basa en una base de datos preexistente, sino en el modelado de las transiciones lógicas más probables a partir de los datos factuales disponibles en el contexto actual.
+
+PRINCIPIO RECTOR
+
+El análisis no evalúa la "fortaleza" intrínseca de un argumento, sino la "probabilidad de transición" entre diferentes estados de razonamiento para un actor específico. Se basa en el principio de la "menor resistencia cognitiva": los actores (jueces, abogados) tienden a seguir la secuencia de decisiones que requiere la menor carga justificativa o que se alinea con la inercia del sistema, a menos que un argumento sea lo suficientemente potente como para forzar un "salto" disruptivo.
+
+PROTOCOLO DE ANÁLISIS "MARKOV EN CONTEXTO"
+
+1. Definir el Estado Inicial: Identificar la situación o decisión de base sobre la cual el tercero debe actuar (ej. una sentencia apelada, un escrito a contestar, una oferta de acuerdo).
+
+2. Identificar los "Estados Posibles": Listar las decisiones o conclusiones a las que el tercero podría llegar (ej. "Rechazar Agravio", "Acoger Agravio", "Declarar Desierto", "Proponer Contraoferta").
+
+3. Mapear las "Transiciones Probables": Para cada "Estado Posible", evaluar la probabilidad de que el tercero transite hacia él. Esta evaluación se basa en los siguientes factores:
+
+   - Inercia del Sistema: ¿La decisión sigue la línea jurisprudencial mayoritaria, el statu quo del fuero o requiere apartarse de él? Las transiciones que mantienen la inercia son más probables.
+   
+   - Carga Argumentativa: ¿La decisión es simple de fundamentar (ej. corregir un error material) o requiere una argumentación compleja y disruptiva (ej. declarar una inconstitucionalidad)? Las transiciones de baja carga argumentativa son más probables.
+   
+   - Perfil del Actor (si se conoce): ¿Se trata de un tribunal conocido por ser conservador o innovador? ¿Es un abogado adverso conocido por ser agresivo o conciliador?
+
+4. Construir la "Cadena de Razonamiento" más Probable: Unir las transiciones más probables en una secuencia lógica para predecir el curso de acción o la estructura de la decisión más factible del tercero.
+
+5. Presentar el Resultado (Formato Tabla Comparativa): Si es posible, contrastar la predicción del "Análisis Estructural (Markov)" con la del "Análisis Estratégico (Red Team)" para identificar divergencias y obtener una visión más completa del panorama.

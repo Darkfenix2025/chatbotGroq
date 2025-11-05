@@ -1,0 +1,122 @@
+{
+  "modules": {
+    "core/base-agent.txt": {
+      "category": "core",
+      "priority": 10,
+      "maxTokens": 400,
+      "keywords": ["identidad", "directivas", "núcleo", "sistema", "agente", "jurídico"],
+      "alwaysActive": true,
+      "description": "Identidad y directivas fundamentales del agente legal"
+    },
+    "core/legal-context.txt": {
+      "category": "core", 
+      "priority": 9,
+      "maxTokens": 350,
+      "keywords": ["conocimiento", "capacidades", "derecho", "civil", "laboral", "argentino"],
+      "alwaysActive": true,
+      "description": "Base de conocimiento legal y capacidades operativas"
+    },
+    "core/interaction-style.txt": {
+      "category": "core",
+      "priority": 8,
+      "maxTokens": 300,
+      "keywords": ["interacción", "estilo", "comunicación", "persona", "dual"],
+      "alwaysActive": true,
+      "description": "Protocolo de interacción y estilo de comunicación"
+    },
+    "analysis/strategic-360.txt": {
+      "category": "analysis",
+      "priority": 7,
+      "maxTokens": 450,
+      "keywords": ["análisis", "estratégico", "360", "razonamiento", "fundamentación"],
+      "alwaysActive": false,
+      "description": "Análisis estratégico proactivo y fundamentación profunda"
+    },
+    "analysis/risk-assessment.txt": {
+      "category": "analysis",
+      "priority": 6,
+      "maxTokens": 400,
+      "keywords": ["riesgo", "limitaciones", "metacognición", "razonamiento", "profundo"],
+      "alwaysActive": false,
+      "description": "Evaluación de riesgos y razonamiento profundo"
+    },
+    "analysis/case-reasoning.txt": {
+      "category": "analysis",
+      "priority": 5,
+      "maxTokens": 500,
+      "keywords": ["markov", "predictivo", "estructural", "tribunal", "decisión"],
+      "alwaysActive": false,
+      "description": "Análisis predictivo y razonamiento estructural"
+    },
+    "tactics/negotiation.txt": {
+      "category": "tactics",
+      "priority": 4,
+      "maxTokens": 350,
+      "keywords": ["negociación", "comunicación", "elicitación", "incredulidad", "marco"],
+      "alwaysActive": false,
+      "description": "Tácticas de negociación y comunicación estratégica"
+    },
+    "tactics/litigation.txt": {
+      "category": "tactics",
+      "priority": 4,
+      "maxTokens": 400,
+      "keywords": ["litigio", "argumentación", "ataque", "forma", "narrativa", "presión"],
+      "alwaysActive": false,
+      "description": "Tácticas de litigio y argumentación"
+    },
+    "tactics/document-drafting.txt": {
+      "category": "tactics",
+      "priority": 3,
+      "maxTokens": 500,
+      "keywords": ["deconstrucción", "auditoría", "coherencia", "ancla", "fáctica"],
+      "alwaysActive": false,
+      "description": "Tácticas de deconstrucción lógico-estructural"
+    },
+    "modes/red-team.txt": {
+      "category": "modes",
+      "priority": 2,
+      "maxTokens": 400,
+      "keywords": ["estratega", "rojo", "red", "team", "vulnerabilidad", "crítico"],
+      "alwaysActive": false,
+      "description": "Modo Estratega Rojo para análisis crítico"
+    },
+    "modes/collaborative.txt": {
+      "category": "modes",
+      "priority": 1,
+      "maxTokens": 250,
+      "keywords": ["colaborativo", "constructivo", "soluciones", "feedback"],
+      "alwaysActive": false,
+      "description": "Modo colaborativo estándar"
+    },
+    "modes/technical.txt": {
+      "category": "modes",
+      "priority": 1,
+      "maxTokens": 300,
+      "keywords": ["técnico", "doctrinal", "normativo", "jurisprudencia", "precisión"],
+      "alwaysActive": false,
+      "description": "Modo técnico especializado"
+    }
+  },
+  "categories": {
+    "core": {
+      "description": "Módulos fundamentales siempre activos",
+      "priority": 4,
+      "color": "#ff6b6b"
+    },
+    "analysis": {
+      "description": "Módulos de análisis estratégico y razonamiento",
+      "priority": 3,
+      "color": "#4ecdc4"
+    },
+    "tactics": {
+      "description": "Módulos de tácticas específicas",
+      "priority": 2,
+      "color": "#45b7d1"
+    },
+    "modes": {
+      "description": "Módulos de modos especiales de operación",
+      "priority": 1,
+      "color": "#96ceb4"
+    }
+  }
+}
